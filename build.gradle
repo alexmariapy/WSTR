@@ -1,0 +1,98 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.8'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.crashlytics'
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.writingstar.autotypingandtextexpansion"
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 7
+        versionName "1.0.4"
+        manifestPlaceholders = [onesignal_app_id               : "07cfb0d0-ad68-49b2-9e4d-f24256c5665b",
+                                onesignal_google_project_number: "983526529806"]
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "inappid", "android.test.purchased"
+            resValue "string", "google_app_ads_id", "ca-app-pub-7633575601029574~5403671317"
+            resValue "string", "banner_home_footer", "ca-app-pub-7633575601029574/8959772943"
+            resValue "string", "interstitial_full_screen_exit", "ca-app-pub-7633575601029574/1162293534"
+            resValue "string", "interstitial_full_screen_splash", "ca-app-pub-7633575601029574/1162293534"
+            resValue "string", "interstitial_full_screen_ph_back", "ca-app-pub-7633575601029574/1162293534"
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "inappid", "com.writingstar.autotypingandtextexpansion.fullpurchase"
+            resValue "string", "google_app_ads_id", "ca-app-pub-1531973473735447~8603900323"
+            resValue "string", "banner_home_footer", "ca-app-pub-1531973473735447/4664655310"
+            resValue "string", "interstitial_full_screen_exit", "ca-app-pub-1531973473735447/8136996463"
+            resValue "string", "interstitial_full_screen_splash", "ca-app-pub-1531973473735447/1571588113"
+            resValue "string", "interstitial_full_screen_ph_back", "ca-app-pub-1531973473735447/9725410307"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    android {
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.opencsv:opencsv:5.2'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.firebase:firebase-config:19.2.0'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'com.android.billingclient:billing:3.0.0'
+    implementation 'com.annimon:stream:1.2.1'
+    implementation 'com.google.android.gms:play-services-drive:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    implementation 'com.onesignal:OneSignal:3.15.2'
+
+    dependencies {
+        implementation('dev.doubledot.doki:library:0.0.1@aar') {
+            transitive = true
+        }
+    }
+}
+apply plugin: 'com.google.gms.google-services'
